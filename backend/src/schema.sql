@@ -11,8 +11,18 @@ CREATE TABLE IF NOT EXISTS workspaces (
   name text NOT NULL,
   support_email text NOT NULL DEFAULT '',
   timezone text NOT NULL DEFAULT 'UTC',
+  brand_name text NOT NULL DEFAULT 'Chatbot.io',
+  brand_logo_url text NOT NULL DEFAULT '',
+  brand_color text NOT NULL DEFAULT '#2167f3',
+  powered_by boolean NOT NULL DEFAULT true,
+  custom_domain text NOT NULL DEFAULT '',
   created_at timestamptz NOT NULL DEFAULT now()
 );
+ALTER TABLE workspaces ADD COLUMN IF NOT EXISTS brand_name text NOT NULL DEFAULT 'Chatbot.io';
+ALTER TABLE workspaces ADD COLUMN IF NOT EXISTS brand_logo_url text NOT NULL DEFAULT '';
+ALTER TABLE workspaces ADD COLUMN IF NOT EXISTS brand_color text NOT NULL DEFAULT '#2167f3';
+ALTER TABLE workspaces ADD COLUMN IF NOT EXISTS powered_by boolean NOT NULL DEFAULT true;
+ALTER TABLE workspaces ADD COLUMN IF NOT EXISTS custom_domain text NOT NULL DEFAULT '';
 CREATE TABLE IF NOT EXISTS workspace_members (
   workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
   user_id text NOT NULL REFERENCES users(id) ON DELETE CASCADE,
